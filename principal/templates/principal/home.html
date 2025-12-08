@@ -1,151 +1,126 @@
 {% extends 'base.html' %} 
 
-{% block title %}Aulas de Alfabetização{% endblock %}
+{% block title %}Aulinhas da Manu | Alfabetização Personalizada{% endblock %}
 
 {% block content %} 
-    <section class="hero">
-        <h1>Desvende o Mundo das Letras!</h1>
-        <h2>Aulas Particulares de Alfabetização para Todas as Idades</h2>
-        <p>Seja você uma criança dando os primeiros passos ou um adulto buscando realizar o sonho de ler e escrever, nossas aulas são feitas sob medida para você.</p>
-        <a href="#" class="btn-primary">Saiba Mais e Agende sua Aula!</a>
-    </section>
+    
+    <header class="header-name">
+        <h1>Aulinhas da Manu</h1>
+        <h2>Alfabetização e Reforço Escolar</h2>
+    </header>
 
-    <section class="features">
-        <div class="feature-item">
-            <h3>Ensino Personalizado</h3>
-            <p>Métodos adaptados ao seu ritmo e estilo de aprendizado.</p>
-        </div>
-        <div class="feature-item">
-            <h3>Professores Qualificados</h3>
-            <p>Experiência e paixão por ensinar, transformando o aprendizado em prazer.</p>
-        </div>
-        <div class="feature-item">
-            <h3>Flexibilidade de Horários</h3>
-            <p>Aulas presenciais ou online, no momento que melhor se encaixa na sua rotina.</p>
-        </div>
-    </section>
+    <div class="content-grid">
+        
+        <section class="image-area">
+            <div class="image-placeholder">
+                <p>Espaço para Imagem da Professora ou Aula</p>
+                </div>
+        </section>
 
-    <section class="call-to-action">
-        <h2>Pronto para Começar?</h2>
-        <p>Invista no seu futuro. A alfabetização abre portas para novas oportunidades e conhecimentos.</p>
-        <a href="#" class="btn-secondary">Entre em Contato Agora!</a>
-    </section>
+        <section class="info-area">
+            <h3>Como Funcionam as Aulas?</h3>
+            <ul class="aula-details">
+                <li>📚 Pacote de <strong>8 Aulas</strong>.</li>
+                <li>⏰ Duração de 1 hora e 30 minutos por sessão.</li>
+                <li>📝 Material didático próprio e exclusivo, adaptado à necessidade do aluno.</li>
+                <li>✏️ Acompanhamento no Para Casa e reforço nos pontos fracos.</li>
+                <li>🏠 Flexibilidade: Aulas Domiciliares (em casa) ou na Minha Sala (espaço dedicado).</li>
+                <li>💖 Metodologia lúdica.</li>
+            </ul>
+            <a href="#" class="btn-contact">Quero Agendar Minha Avaliação Gratuita!</a>
+        </section>
+
+    </div>
+
 {% endblock %}
 
 {% block extra_css %} 
 <style>
-    body {
-        font-family: Arial, sans-serif;
+    body { font-family: 'Arial', sans-serif; background-color: #f4f7f6; color: #333; }
+    main { max-width: 1000px; margin: 30px auto; padding: 20px; background-color: white; box-shadow: 0 0 15px rgba(0,0,0,0.1); border-radius: 10px; }
+
+    .header-name {
+        text-align: center;
+        padding: 20px 0 40px;
+        border-bottom: 2px solid #e0e0e0;
+        margin-bottom: 30px;
+    }
+    .header-name h1 {
+        color: #e57373; 
+        font-size: 3.5em; 
         margin: 0;
-        background-color: #f4f7f6;
-        color: #333;
+        text-transform: uppercase;
+        letter-spacing: 3px;
     }
-    header {
-        background-color: #34495e;
-        color: white;
-        padding: 1em 0;
-        text-align: center;
-    }
-    nav a {
-        color: white;
-        margin: 0 15px;
-        text-decoration: none;
-    }
-    main {
-        padding: 20px;
-        max-width: 900px;
-        margin: 20px auto;
-        background-color: white;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        border-radius: 8px;
-    }
-    .hero {
-        text-align: center;
-        padding: 40px 20px;
-        background-color: #e0f2f1;
-        border-radius: 8px;
-        margin-bottom: 30px;
-    }
-    .hero h1 {
-        color: #26a69a;
-        font-size: 2.8em;
-        margin-bottom: 10px;
-    }
-    .hero h2 {
+    .header-name h2 {
         color: #4db6ac;
-        font-size: 1.5em;
-        margin-bottom: 25px;
+        font-size: 1.2em;
+        margin-top: 5px;
+        font-weight: normal;
     }
-    .hero p {
-        font-size: 1.1em;
-        line-height: 1.6;
-        margin-bottom: 30px;
+    
+    .content-grid {
+        display: flex; 
+        gap: 30px;    
+        align-items: flex-start; 
     }
-    .btn-primary {
-        display: inline-block;
-        background-color: #26a69a;
-        color: white;
-        padding: 15px 30px;
-        text-decoration: none;
-        border-radius: 5px;
-        font-size: 1.1em;
-        transition: background-color 0.3s ease;
+    .image-area, .info-area {
+        flex: 1; 
+        padding: 15px;
     }
-    .btn-primary:hover {
-        background-color: #2bbdad;
-    }
-    .features {
+
+    
+    .image-placeholder {
+        background-color: #cfd8dc;
+        height: 350px; 
+        border-radius: 8px;
         display: flex;
-        justify-content: space-around;
-        flex-wrap: wrap;
-        margin-bottom: 40px;
-    }
-    .feature-item {
-        flex-basis: 30%;
+        justify-content: center;
+        align-items: center;
+        color: #546e7a;
+        font-size: 1.1em;
         text-align: center;
-        padding: 20px;
-        margin: 10px;
-        border: 1px solid #cfd8dc;
-        border-radius: 8px;
-        background-color: #fafafa;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        border: 2px dashed #90a4ae;
     }
-    .feature-item h3 {
+
+    
+    .info-area h3 {
         color: #34495e;
+        border-bottom: 3px solid #4db6ac;
+        padding-bottom: 10px;
+        margin-top: 0;
+    }
+    .aula-details {
+        list-style-type: none; 
+        padding: 0;
+    }
+    .aula-details li {
+        background: #e0f2f1; 
         margin-bottom: 10px;
+        padding: 12px 15px;
+        border-radius: 5px;
+        line-height: 1.4;
+        font-size: 1.05em;
+        border-left: 5px solid #26a69a; 
     }
-    .call-to-action {
-        text-align: center;
-        padding: 40px 20px;
-        background-color: #e3f2fd;
-        border-radius: 8px;
+
+    
+    .btn-contact {
+        display: block;
         margin-top: 30px;
-    }
-    .call-to-action h2 {
-        color: #1e88e5;
-        font-size: 2.2em;
-        margin-bottom: 15px;
-    }
-    .btn-secondary {
-        display: inline-block;
-        background-color: #1e88e5;
+        text-align: center;
+        background-color: #e57373;
         color: white;
-        padding: 15px 30px;
+        padding: 15px 25px;
         text-decoration: none;
         border-radius: 5px;
-        font-size: 1.1em;
+        font-size: 1.2em;
+        font-weight: bold;
         transition: background-color 0.3s ease;
     }
-    .btn-secondary:hover {
-        background-color: #29b6f6;
+    .btn-contact:hover {
+        background-color: #ef9a9a;
     }
-    footer {
-        text-align: center;
-        padding: 20px;
-        background-color: #34495e;
-        color: white;
-        margin-top: 30px;
-        border-radius: 0 0 8px 8px;
-    }
+
 </style>
 {% endblock %}
