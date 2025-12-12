@@ -1,6 +1,7 @@
-# alunos/models.py
+# alunos/models.py 
 
 from django.db import models
+from django.contrib.auth.models import User 
 
 class Responsavel(models.Model):
     ID_Responsavel = models.AutoField(primary_key=True)
@@ -14,6 +15,9 @@ class Responsavel(models.Model):
 
 class Aluno(models.Model):
     ID_Aluno = models.AutoField(primary_key=True)
+    
+    professor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='alunos', null=True) 
+    
     Nome = models.CharField(max_length=100)
     DataNascimento = models.DateField()
     NivelEscolar = models.CharField(max_length=50)
