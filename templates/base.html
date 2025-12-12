@@ -12,7 +12,31 @@
     </head>
 <body>
     <header>
-        <nav class="p-2 border-bottom"> <a href="/" class="text-decoration-none fw-bold fs-5">Home</a>
+        <nav class="p-2 border-bottom d-flex justify-content-between align-items-center"> 
+            
+            <div>
+                <a href="{% url 'principal:home' %}" class="text-decoration-none fw-bold fs-5 me-3 text-dark">Home</a>
+            </div>
+
+            <div>
+                {% if user.is_authenticated %}
+                    <span class="fw-bold fs-5 me-3 text-success">
+                        Bem-vindo(a), {{ user.username }}!
+                    </span>
+                    
+                    <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-link text-danger small p-0 align-baseline fw-bold fs-5 d-inline-block">
+                            Sair
+                        </button>
+                    </form>
+
+                {% else %}
+                    <a href="{% url 'login' %}" class="text-decoration-none fw-bold fs-5 me-3 text-primary">Login</a>
+                    <a href="{% url 'principal:signup' %}" class="text-decoration-none fw-bold fs-5 text-secondary">Cadastro</a>
+                {% endif %}
+            </div>
+            
         </nav>
     </header>
 

@@ -131,3 +131,13 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_storage')
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Redireciona o usuário para a home page após o login bem-sucedido
+LOGIN_REDIRECT_URL = '/' 
+
+# Redireciona o usuário para a home page após o logout
+LOGOUT_REDIRECT_URL = '/' 
+
+# O caminho para onde o usuário NÃO autenticado é enviado ao tentar acessar 
+# uma view que exige login (se você usar o decorator @login_required)
+LOGIN_URL = '/accounts/login/'
