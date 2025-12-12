@@ -1,0 +1,63 @@
+{% extends 'base.html' %} 
+
+{% block title %}Meus Alunos{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="display-5 fw-bold text-success mb-4">
+        Meus Alunos
+    </h1>
+
+    <div class="d-flex justify-content-between mb-4">
+        <p class="lead text-muted">Total de alunos cadastrados: <span class="fw-bold">{{ alunos.count }}</span></p>
+        <a href="{% url 'alunos:adicionar_aluno' %}" class="btn btn-success fw-bold">
+            + Adicionar Novo Aluno
+        </a>
+    </div>
+
+    {% if alunos %}
+        <div class="table-responsive">
+            <table class="table table-striped table-hover align-middle shadow-sm rounded-3 overflow-hidden">
+                <thead class="table-success">
+                    <tr>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Nível Escolar</th>
+                        <th scope="col">Data Nasc.</th>
+                        <th scope="col">Responsável</th>
+                        <th scope="col" class="text-center">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for aluno in alunos %}
+                    <tr>
+                        <td class="fw-bold">{{ aluno.Nome }}</td>
+                        <td>{{ aluno.NivelEscolar }}</td>
+                        <td>{{ aluno.DataNascimento|date:"d/m/Y" }}</td>
+                        <td>
+                            {% if aluno.responsavel %}
+                                {{ aluno.responsavel.Nome }}
+                            {% else %}
+                                <span class="text-danger">Não Cadastrado</span>
+                            {% endif %}
+                        </td>
+                        <td class="text-center">
+                            <a href="#" class="btn btn-sm btn-outline-primary me-2">Detalhes</a>
+                            <a href="#" class="btn btn-sm btn-outline-secondary">Editar</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="alert alert-info text-center mt-5" role="alert">
+            Você ainda não tem alunos cadastrados. <a href="{% url 'alunos:adicionar_aluno' %}" class="alert-link fw-bold">Clique aqui para adicionar o primeiro aluno!</a>
+        </div>
+    {% endif %}
+    
+    <div class="mt-4 text-center">
+        <a href="{% url 'principal:dashboard' %}" class="btn btn-outline-secondary">Voltar ao Dashboard</a>
+    </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'base.html' %} 
+
+{% block title %}Dashboard | Área do Professor{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <h1 class="display-5 fw-bold text-primary mb-4">
+        Bem-vindo(a), Professor(a) {{ user.username }}!
+    </h1>
+    
+    <p class="lead">
+        Selecione uma das opções abaixo para gerenciar sua rotina.
+    </p>
+
+    <div class="row mt-5">
+        
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card shadow-sm h-100 border-success">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold text-success">Gerenciar Alunos</h5>
+                    <p class="card-text">Adicione novos alunos, edite informações e acesse o histórico.</p>
+                    <a href="{% url 'alunos:lista_alunos' %}" class="btn btn-success mt-2">Ver Meus Alunos</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card shadow-sm h-100 border-primary">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold text-primary">Agendar Aulas</h5>
+                    <p class="card-text">Visualize sua agenda, marque aulas futuras e registre o conteúdo das sessões passadas.</p>
+                    <a href="#" class="btn btn-primary mt-2 disabled">Ver Agenda (Em Breve)</a>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+{% endblock %}

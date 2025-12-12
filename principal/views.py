@@ -20,3 +20,7 @@ def signup(request):
         form = CustomUserCreationForm()
         
     return render(request, 'registration/signup.html', {'form': form})
+
+@login_required 
+def dashboard(request):
+    return render(request, 'principal/dashboard.html', {})

@@ -3,6 +3,21 @@
 from django.db import models
 from django.contrib.auth.models import User 
 
+NIVEL_ESCOLAR_CHOICES = [
+    ('1_ANO_FUNDAMENTAL', '1º ano do Ensino Fundamental'),
+    ('2_ANO_FUNDAMENTAL', '2º ano do Ensino Fundamental'),
+    ('3_ANO_FUNDAMENTAL', '3º ano do Ensino Fundamental'),
+    ('4_ANO_FUNDAMENTAL', '4º ano do Ensino Fundamental'),
+    ('5_ANO_FUNDAMENTAL', '5º ano do Ensino Fundamental'),    
+    ('6_ANO_FUNDAMENTAL', '6º ano do Ensino Fundamental'),
+    ('7_ANO_FUNDAMENTAL', '7º ano do Ensino Fundamental'),
+    ('8_ANO_FUNDAMENTAL', '8º ano do Ensino Fundamental'),
+    ('9_ANO_FUNDAMENTAL', '9º ano do Ensino Fundamental'),
+    ('ENSINO_MEDIO', 'Ensino Médio'),
+    ('SUPERIOR', 'Ensino Superior'),
+    ('EJA', 'Educação de Jovens e Adultos (EJA)'),
+    ('OUTRO', 'Outro'),
+]
 class Responsavel(models.Model):
     ID_Responsavel = models.AutoField(primary_key=True)
     Nome = models.CharField(max_length=100)
@@ -20,7 +35,13 @@ class Aluno(models.Model):
     
     Nome = models.CharField(max_length=100)
     DataNascimento = models.DateField()
-    NivelEscolar = models.CharField(max_length=50)
+    NivelEscolar = models.CharField(
+        max_length=50, 
+        choices=NIVEL_ESCOLAR_CHOICES, 
+        default='OUTRO', 
+        blank=False, 
+        null=False, 
+        db_index=True)
     ObservacoesProgresso = models.TextField(blank=True)
     
     responsavel = models.ForeignKey(
@@ -33,3 +54,4 @@ class Aluno(models.Model):
 
     def __str__(self):
         return self.Nome
+
