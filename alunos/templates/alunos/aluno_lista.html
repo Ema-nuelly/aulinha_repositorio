@@ -41,8 +41,13 @@
                             {% endif %}
                         </td>
                         <td class="text-center">
-                            <a href="#" class="btn btn-sm btn-outline-primary me-2">Detalhes</a>
-                            <a href="#" class="btn btn-sm btn-outline-secondary">Editar</a>
+                            <a href="#" class="btn btn-sm btn-outline-secondary me-2">Editar</a>
+                            
+                            <a href="{% url 'alunos:deletar_aluno' pk=aluno.pk %}" 
+                               class="btn btn-sm btn-outline-danger" 
+                               title="Excluir Aluno">
+                                Deletar
+                            </a>
                         </td>
                     </tr>
                     {% endfor %}

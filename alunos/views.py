@@ -1,8 +1,7 @@
 # alunos/views.py
 
-from django.shortcuts import render
-from django.views.generic import ListView, CreateView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import ListView, CreateView, DeleteView # Adicione DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin # Adicione UserPassesTestMixin
 from django.urls import reverse_lazy
 from django.contrib import messages
 from .models import Aluno
@@ -26,3 +25,19 @@ class AlunoListView(LoginRequiredMixin, ListView):
     
     def get_queryset(self):
         return Aluno.objects.filter(professor=self.request.user).order_by('Nome')
+
+class AlunoDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Aluno
+    success_url = reverse_lazy('alunos:lista_alunos')
+    
+    def test_func(self):
+        aluno = self.get_object()
+        return aluno.professor == self.request.user
+
+    def form_valid(self, form):
+        messages.success(self.request, f"O aluno(a) {self.object.Nome} foi deletado(a) com sucesso.")
+        return super().form_valid(form)
+
+    def handle_no_permission(self):
+        messages.error(self.request, "Você não tem permissão para deletar este aluno.")
+        return redirect('alunos:lista_alunos')
