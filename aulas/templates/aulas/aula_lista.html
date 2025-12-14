@@ -21,6 +21,43 @@
 
     <div class="d-flex justify-content-between mb-4">
         <p class="lead text-muted">Aulas agendadas e realizadas: <span class="fw-bold">{{ aulas.count }}</span></p>
+    </div>
+
+    <div class="card p-3 mb-4 shadow-sm bg-light">
+        <h5 class="card-title fw-bold mb-3 text-secondary">Filtrar Aulas</h5>
+        <form method="GET" action="{% url 'aulas:lista_aulas' %}">
+            
+            <div class="row g-3 align-items-end">
+                <div class="col-md-3">
+                    {{ form_filtro.aluno.label_tag }}
+                    {{ form_filtro.aluno }}
+                </div>
+                <div class="col-md-3">
+                    {{ form_filtro.status.label_tag }}
+                    {{ form_filtro.status }}
+                </div>
+                <div class="col-md-3">
+                    {{ form_filtro.data_inicio.label_tag }}
+                    {{ form_filtro.data_inicio }}
+                </div>
+                <div class="col-md-3">
+                    {{ form_filtro.data_fim.label_tag }}
+                    {{ form_filtro.data_fim }}
+                </div>
+            </div>
+            
+            <div class="d-flex justify-content-end mt-4">
+                <a href="{% url 'aulas:lista_aulas' %}" class="btn btn-outline-secondary me-2">
+                    Limpar Filtro
+                </a>
+                <button type="submit" class="btn btn-primary fw-bold">
+                    Aplicar Filtro
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="mb-4">
         <a href="{% url 'aulas:agendar_aula' %}" class="btn btn-primary fw-bold">
             + Agendar Nova Aula
         </a>
@@ -65,14 +102,24 @@
                         <td class="text-center">
                             
                             {% if aula.Status == 'AGENDADA' %}
-                                <a href="#" class="btn btn-sm btn-outline-success me-2 disabled">Registrar</a>
-                                
-                                <a href="#" class="btn btn-sm btn-outline-secondary me-2 disabled">Editar</a>
-                            {% else %}
-                                <a href="#" class="btn btn-sm btn-outline-info me-2 disabled">Ver Detalhes</a>
-                            {% endif %}
+                                <a href="{% url 'aulas:registrar_aula' pk=aula.pk %}" 
+                                class="btn btn-sm btn-outline-success me-2"
+                                title="Registrar Conteúdo e Marcar como Realizada">
+                                    Registrar
+                                </a>
+                                <a href="{% url 'aulas:registrar_aula' pk=aula.pk %}" class="btn btn-sm btn-outline-secondary me-2">Editar</a> 
 
-                            <a href="#" class="btn btn-sm btn-outline-danger disabled" title="Cancelar Aula">Cancelar</a>
+                                <a href="{% url 'aulas:cancelar_aula' pk=aula.pk %}" 
+                                class="btn btn-sm btn-outline-danger" 
+                                title="Cancelar Aula"
+                                onclick="return confirm('Tem certeza que deseja cancelar esta aula? Esta ação não pode ser desfeita.');">
+                                    Cancelar
+                                </a>
+                            {% else %}
+                                <a href="{% url 'aulas:registrar_aula' pk=aula.pk %}" class="btn btn-sm btn-outline-info me-2">Ver Detalhes</a>
+                                
+                                <a href="#" class="btn btn-sm btn-outline-danger disabled" title="Apenas aulas agendadas podem ser canceladas">Cancelar</a>
+                            {% endif %}
                         </td>
                     </tr>
                     {% endfor %}

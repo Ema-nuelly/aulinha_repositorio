@@ -1,3 +1,5 @@
+
+
 {% extends 'base.html' %} 
 
 {% block title %}Dashboard | Área do Professor{% endblock %}
@@ -45,6 +47,18 @@
             </div>
         </div>
         
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <i class="bi bi-book-half text-success display-6 mb-3"></i>
+                    <h5 class="card-title fw-bold">Biblioteca de Materiais</h5>
+                    <p class="card-text text-muted">Gerencie seus arquivos, livros e recursos didáticos.</p>
+                    <a href="{% url 'materiais:lista_materiais' %}" class="btn btn-outline-success fw-bold stretched-link">
+                        Acessar Materiais
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

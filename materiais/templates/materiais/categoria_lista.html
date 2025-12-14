@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Gerenciar Categorias{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <h1 class="display-5 fw-bold text-primary mb-4">
+        Gerenciar Categorias
+    </h1>
+
+    <div class="d-flex justify-content-between mb-4">
+        <p class="lead text-muted">Total de Categorias: <span class="fw-bold">{{ categorias.count }}</span></p>
+        <a href="{% url 'materiais:criar_categoria' %}" class="btn btn-primary fw-bold">
+            + Adicionar Nova Categoria
+        </a>
+    </div>
+
+    {% if categorias %}
+        <div class="list-group shadow-sm rounded-3 overflow-hidden">
+            {% for categoria in categorias %}
+            <div class="list-group-item d-flex justify-content-between align-items-center">
+                <h5 class="mb-1">{{ categoria.Nome }}</h5>
+                <div>
+                    <a href="{% url 'materiais:editar_categoria' pk=categoria.pk %}" class="btn btn-sm btn-outline-secondary me-2" title="Editar Categoria">
+                        Editar
+                    </a>
+                    <a href="{% url 'materiais:deletar_categoria' pk=categoria.pk %}" class="btn btn-sm btn-outline-danger" title="Excluir Categoria" onclick="return confirm('Tem certeza que deseja excluir a categoria {{ categoria.Nome }}?');">
+                        Excluir
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info text-center mt-5" role="alert">
+            Você ainda não tem categorias cadastradas. <a href="{% url 'materiais:criar_categoria' %}" class="alert-link fw-bold">Clique aqui para adicionar sua primeira categoria!</a>
+        </div>
+    {% endif %}
+    
+    <div class="mt-4 text-center">
+        <a href="{% url 'materiais:lista_materiais' %}" class="btn btn-outline-secondary">Voltar para a Lista de Materiais</a>
+    </div>
+
+</div>
+{% endblock %}

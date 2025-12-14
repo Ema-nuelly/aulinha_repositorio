@@ -43,6 +43,39 @@
                 {% endfor %}
             </div>
             
+            {% if form.instance.pk %}
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label for="{{ form.Status.id_for_label }}" class="form-label fw-bold">Status</label>
+                        {{ form.Status }}
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="{{ form.Conteudo.id_for_label }}" class="form-label fw-bold">
+                        Conteúdo Registrado
+                    </label>
+                    {{ form.Conteudo }}
+                </div>
+                
+                <div class="mb-3">
+                    <label for="{{ form.materiais_usados.id_for_label }}" class="form-label fw-bold">
+                        Materiais Didáticos Utilizados
+                        <a href="{% url 'materiais:lista_materiais' %}" 
+                        target="_blank" 
+                        class="badge text-bg-secondary text-decoration-none ms-2"
+                        title="Clique para adicionar/editar materiais em uma nova aba">
+                            <i class="bi bi-gear-fill"></i> Gerenciar Materiais
+                        </a>
+                    </label>
+                    {{ form.materiais_usados }}
+                    {% for error in form.materiais_usados.errors %}
+                        <div class="text-danger small">{{ error }}</div>
+                    {% endfor %}
+                </div>
+                
+            {% endif %}
+
             <button type="submit" class="btn btn-primary w-100 mb-3 mt-4">
                 {% if form.instance.pk %}
                     Salvar Alterações
