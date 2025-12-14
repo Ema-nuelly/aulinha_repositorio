@@ -3,7 +3,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages 
-from .forms import CustomUserCreationForm 
+from .forms import CustomUserCreationForm
 
 def home(request):
     return render(request, 'principal/home.html')
