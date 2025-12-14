@@ -29,7 +29,8 @@ class Aula(models.Model):
 
     materiais_usados = models.ManyToManyField(
         Material, 
-        related_name='aulas_que_usam'
+        related_name='aulas_que_usam',
+        blank=True
     )
 
     def __str__(self):

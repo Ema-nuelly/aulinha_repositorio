@@ -41,7 +41,11 @@
                             {% endif %}
                         </td>
                         <td class="text-center">
-                            <a href="#" class="btn btn-sm btn-outline-secondary me-2">Editar</a>
+                            <a href="{% url 'alunos:editar_aluno' pk=aluno.pk %}" 
+                               class="btn btn-sm btn-outline-secondary me-2"
+                               title="Editar Informações">
+                                Editar
+                            </a>
                             
                             <a href="{% url 'alunos:deletar_aluno' pk=aluno.pk %}" 
                                class="btn btn-sm btn-outline-danger" 

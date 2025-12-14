@@ -1,7 +1,7 @@
 # alunos/views.py
 
-from django.views.generic import ListView, CreateView, DeleteView # Adicione DeleteView
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin # Adicione UserPassesTestMixin
+from django.views.generic import ListView, CreateView, DeleteView, UpdateView
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 from django.contrib import messages
 from .models import Aluno
@@ -40,4 +40,21 @@ class AlunoDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
     def handle_no_permission(self):
         messages.error(self.request, "Você não tem permissão para deletar este aluno.")
+        return redirect('alunos:lista_alunos')
+
+class AlunoUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Aluno
+    form_class = AlunoForm
+    template_name = 'alunos/aluno_form.html' 
+    
+    def get_success_url(self):
+        messages.success(self.request, f"O aluno(a) {self.object.Nome} foi atualizado(a) com sucesso!")
+        return reverse_lazy('alunos:lista_alunos')
+        
+    def test_func(self):
+        aluno = self.get_object()
+        return aluno.professor == self.request.user
+        
+    def handle_no_permission(self):
+        messages.error(self.request, "Você não tem permissão para editar este aluno.")
         return redirect('alunos:lista_alunos')

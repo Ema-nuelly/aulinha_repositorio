@@ -43,6 +43,7 @@ class Aluno(models.Model):
         null=False, 
         db_index=True)
     ObservacoesProgresso = models.TextField(blank=True)
+    ativo = models.BooleanField(default=True)
     
     responsavel = models.ForeignKey(
         Responsavel, 
