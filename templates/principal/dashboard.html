@@ -1,64 +1,103 @@
-
-
 {% extends 'base.html' %} 
 
 {% block title %}Dashboard | Área do Professor{% endblock %}
 
 {% block content %}
 <div class="container my-5">
+    
     {% if messages %}
         {% for message in messages %}
-            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show shadow-sm" role="alert">
                 {{ message }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         {% endfor %}
     {% endif %}
 
-    <h1 class="display-5 fw-bold text-primary mb-4">
-        Bem-vindo(a), Professor(a) {{ user.username }}!
-    </h1>
-    
-    <p class="lead">
-        Selecione uma das opções abaixo para gerenciar sua rotina.
-    </p>
+    <div class="bg-light p-5 rounded-4 mb-5 shadow-sm border-start border-5 border-primary">
+        <h1 class="display-5 fw-bold text-dark">
+            Olá, Professor(a) <span class="text-primary">{{ user.username|title }}</span>!
+        </h1>
+        <p class="lead text-muted mb-0">
+            Bem-vindo ao seu painel de controle. Acesse os módulos de gerenciamento abaixo.
+        </p>
+    </div>
 
-    <div class="row mt-5">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         
-        <div class="col-md-6 col-lg-4 mb-4">
-            <div class="card shadow-sm h-100 border-success">
-                <div class="card-body">
-                    <h5 class="card-title fw-bold text-success">Gerenciar Alunos</h5>
-                    <p class="card-text">Adicione novos alunos, edite informações e acesse o histórico.</p>
-                    <a href="{% url 'alunos:lista_alunos' %}" class="btn btn-success mt-2">Ver Meus Alunos</a>
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0 hover-effect">
+                <div class="card-body text-center p-4">
+                    <div class="mb-3 text-success">
+                        <i class="bi bi-people-fill display-4"></i>
+                    </div>
+                    <h4 class="card-title fw-bold text-success">Alunos e Família</h4>
+                    <p class="card-text text-muted small">Gerencie matriculas, fichas de alunos e contatos dos responsáveis.</p>
+                    
+                    <div class="d-grid gap-2 mt-4">
+                        <a href="{% url 'alunos:lista_alunos' %}" class="btn btn-success fw-bold">
+                            <i class="bi bi-person-badge"></i> Ver Alunos
+                        </a>
+                        <a href="{% url 'alunos:lista_responsaveis' %}" class="btn btn-outline-success btn-sm">
+                            <i class="bi bi-telephone"></i> Gerenciar Responsáveis
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-6 col-lg-4 mb-4">
-            <div class="card shadow-sm h-100 border-primary">
-                <div class="card-body">
-                    <h5 class="card-title fw-bold text-primary">Agendar Aulas</h5>
-                    <p class="card-text">Visualize sua agenda, marque aulas futuras e registre o conteúdo das sessões passadas.</p>
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0 hover-effect">
+                <div class="card-body text-center p-4">
+                    <div class="mb-3 text-primary">
+                        <i class="bi bi-calendar-check-fill display-4"></i>
+                    </div>
+                    <h4 class="card-title fw-bold text-primary">Agenda de Aulas</h4>
+                    <p class="card-text text-muted small">Planeje suas aulas futuras e registre o conteúdo das sessões passadas.</p>
                     
-                    <a href="{% url 'aulas:lista_aulas' %}" class="btn btn-primary mt-2">Ver Agenda</a>
-                    
+                    <div class="d-grid gap-2 mt-4">
+                        <a href="{% url 'aulas:lista_aulas' %}" class="btn btn-primary fw-bold">
+                            <i class="bi bi-calendar-plus"></i> Ver Agenda
+                        </a>
+                        <a href="{% url 'aulas:lista_aulas' %}" class="btn btn-outline-primary btn-sm">
+                            <i class="bi bi-clock-history"></i> Ver Histórico
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
         
-        <div class="col-md-4 mb-4">
-            <div class="card shadow-sm h-100">
-                <div class="card-body">
-                    <i class="bi bi-book-half text-success display-6 mb-3"></i>
-                    <h5 class="card-title fw-bold">Biblioteca de Materiais</h5>
-                    <p class="card-text text-muted">Gerencie seus arquivos, livros e recursos didáticos.</p>
-                    <a href="{% url 'materiais:lista_materiais' %}" class="btn btn-outline-success fw-bold stretched-link">
-                        Acessar Materiais
-                    </a>
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0 hover-effect">
+                <div class="card-body text-center p-4">
+                    <div class="mb-3 text-warning">
+                        <i class="bi bi-collection-fill display-4"></i>
+                    </div>
+                    <h4 class="card-title fw-bold text-dark">Biblioteca Didática</h4>
+                    <p class="card-text text-muted small">Organize seus PDFs, documentos e categorize seus recursos.</p>
+                    
+                    <div class="d-grid gap-2 mt-4">
+                        <a href="{% url 'materiais:lista_materiais' %}" class="btn btn-warning text-dark fw-bold">
+                            <i class="bi bi-folder2-open"></i> Acessar Materiais
+                        </a>
+                        <a href="{% url 'materiais:lista_categorias' %}" class="btn btn-outline-dark btn-sm">
+                            <i class="bi bi-tags"></i> Gerenciar Categorias
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
+
     </div>
 </div>
+
+<style>
+    .hover-effect {
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s;
+    }
+    .hover-effect:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+    }
+</style>
 {% endblock %}

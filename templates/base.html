@@ -3,50 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}AULINHA REPOSITÓRIO{% endblock %}</title>
+    <title>{% block title %}Aulinhas da Manu{% endblock %}</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW-ALEwIH" crossorigin="anonymous">
     
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     
+    <style>
+        /* Aplica a fonte Poppins em todo o site */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa; /* Fundo levemente cinza para destacar os cards */
+        }
+        
+        /* Ajuste para o rodapé ficar sempre embaixo */
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        main {
+            flex: 1;
+        }
+
+        /* Estilo da Navbar */
+        .navbar-brand {
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        .nav-link {
+            font-weight: 500;
+        }
+    </style>
+
     {% block extra_css %}{% endblock %}
 
 </head>
 <body>
+
     <header>
-        <nav class="p-2 border-bottom d-flex justify-content-between align-items-center"> 
-            
-            <div>
-                <a href="{% url 'principal:home' %}" class="text-decoration-none fw-bold fs-5 me-3 text-dark">Home</a>
-            </div>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm py-3">
+            <div class="container">
+                <a class="navbar-brand d-flex align-items-center" href="{% url 'principal:home' %}">
+                    <i class="bi bi-backpack2-fill me-2 fs-4"></i>
+                    Aulinhas da Manu
+                </a>
 
-            <div>
-                {% if user.is_authenticated %}
-                    <a href="{% url 'principal:dashboard' %}" class="text-decoration-none fw-bold fs-5 me-3 text-dark">Dashboard</a>
-                    
-                    <span class="fw-bold fs-5 me-3 text-success">
-                        Bem-vindo(a), {{ user.username }}!
-                    </span>
-                    
-                    <form action="{% url 'logout' %}" method="post" style="display: inline;">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-link text-danger small p-0 align-baseline fw-bold fs-5 d-inline-block">
-                            Sair
-                        </button>
-                    </form>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-                {% else %}
-                    <a href="{% url 'login' %}" class="text-decoration-none fw-bold fs-5 me-3 text-primary">Login</a>
-                    <a href="{% url 'principal:signup' %}" class="text-decoration-none fw-bold fs-5 me-3 text-secondary">Cadastro</a>
-                    
-                    <a href="https://wa.me/5587996222499" target="_blank" 
-                       class="btn btn-sm fw-bold shadow-sm"
-                       style="background-color: #25D366; border-color: #25D366; color: white; font-size: 1rem;">
-                        <i class="fab fa-whatsapp me-1"></i> Agendar primeira aula
-                    </a>
-                    {% endif %}
+                <div class="collapse navbar-collapse" id="navbarContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        {% if user.is_authenticated %}
+                            <li class="nav-item">
+                                <a class="nav-link active" href="{% url 'principal:dashboard' %}">Dashboard</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'alunos:lista_alunos' %}">Alunos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'aulas:lista_aulas' %}">Agenda</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+
+                    <div class="d-flex align-items-center">
+                        {% if user.is_authenticated %}
+                            <div class="dropdown">
+                                <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <div class="bg-white text-primary rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 35px; height: 35px; font-weight: bold;">
+                                        {{ user.username|first|upper }}
+                                    </div>
+                                    <span class="fw-bold d-none d-md-inline">{{ user.username|title }}</span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end shadow border-0" aria-labelledby="userDropdown">
+                                    <li><span class="dropdown-header">Minha Conta</span></li>
+                                    <li><a class="dropdown-item" href="{% url 'principal:dashboard' %}"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li>
+                                        <form action="{% url 'logout' %}" method="post" class="d-inline">
+                                            {% csrf_token %}
+                                            <button type="submit" class="dropdown-item text-danger fw-bold">
+                                                <i class="bi bi-box-arrow-right me-2"></i> Sair
+                                            </button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                        {% else %}
+                            <a href="{% url 'login' %}" class="btn btn-light text-primary fw-bold me-2">Entrar</a>
+                            <a href="{% url 'principal:signup' %}" class="btn btn-outline-light me-3">Cadastrar</a>
+                            
+                            <a href="https://wa.me/5587996222499" target="_blank" class="btn btn-success fw-bold shadow-sm rounded-pill px-3">
+                                <i class="fab fa-whatsapp me-1"></i> Agendar Aula
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
             </div>
-            
         </nav>
     </header>
 
@@ -55,8 +116,11 @@
         {% endblock %}
     </main>
 
-    <footer class="mt-5 pt-3 text-center text-secondary small border-top">
-        © 2025 Aulinhas da Manu. Alfabetização e Reforço Escolar de Qualidade.
+    <footer class="bg-white border-top mt-5 py-4">
+        <div class="container text-center text-secondary">
+            <p class="mb-1 fw-bold">👩‍🏫 Aulinhas da Manu</p>
+            <p class="small mb-0">© 2025. Alfabetização e Reforço Escolar de Qualidade.</p>
+        </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
