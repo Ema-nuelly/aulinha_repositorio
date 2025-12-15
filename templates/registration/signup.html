@@ -1,29 +1,35 @@
 {% extends 'base.html' %} 
+{% load static %}
+{% load widget_tweaks %}
 
 {% block title %}Cadastro | Aulinhas da Manu{% endblock %}
 
 {% block content %}
 <div class="container my-5" style="max-width: 450px;">
-    <div class="card shadow-lg p-4 rounded-4">
-        <h2 class="text-center text-primary mb-4 fw-bold">Criar Nova Conta</h2>
+    <div class="card shadow-lg p-4 rounded-4 border-start border-5 border-primary">
+        
+        <h2 class="text-center text-primary mb-4 fw-bold">
+            <i class="bi bi-person-add-fill me-2"></i> Criar Nova Conta
+        </h2>
         
         <form method="post">
             {% csrf_token %}
             
             {% for field in form %}
                 <div class="mb-3">
-                    <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                    <label for="{{ field.id_for_label }}" class="form-label fw-bold">{{ field.label }}</label>
                     
-                    {{ field }}
+                    {{ field|add_class:"form-control" }}
                     
                     {% for error in field.errors %}
                         <div class="text-danger small">{{ error }}</div>
                     {% endfor %}
+                    {% if field.help_text %}<div class="form-text text-muted">{{ field.help_text }}</div>{% endif %}
                 </div>
             {% endfor %}
 
-            <button type="submit" class="btn btn-custom-primary w-100 mb-3 mt-4">
-                Cadastrar
+            <button type="submit" class="btn btn-custom-primary w-100 mb-3 mt-4 fw-bold">
+                <i class="bi bi-check-circle-fill me-2"></i> Cadastrar
             </button>
         </form>
         

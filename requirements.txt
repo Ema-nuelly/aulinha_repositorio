@@ -1,6 +1,7 @@
 # Dependências principais
 Django~=5.2.0              # Framework principal (supondo Django 5.x)
 Pillow~=10.3.0             # Necessário para manipulação de arquivos de imagem
+django-widget-tweaks~=1.4.12 # Para facilitar a customização de formulários no Django
 
 # Dependências comuns para Hospedagem/Produção
 gunicorn~=22.0.0           # Servidor de aplicação WSGI para produção (necessário para Render/Heroku)

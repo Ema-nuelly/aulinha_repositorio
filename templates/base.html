@@ -1,131 +1,141 @@
-<!DOCTYPE html>
+{% load static %}
+<!doctype html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Aulinhas da Manu{% endblock %}</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW-ALEwIH" crossorigin="anonymous">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     
+    <title>{% block title %}EduGestão | Gestão para Professores{% endblock %}</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW-ALEwIH" 
+          crossorigin="anonymous">
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    
+
     <style>
-        /* Aplica a fonte Poppins em todo o site */
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f8f9fa; /* Fundo levemente cinza para destacar os cards */
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
         
-        /* Ajuste para o rodapé ficar sempre embaixo */
+        :root {
+            --bs-primary: #4f46e5; 
+            --bs-success: #198754; 
+            --bs-info: #0d6efd; 
+            --bs-light: #f9fafb; 
+        }
+
         body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bs-light);
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
         }
+
         main {
-            flex: 1;
+            flex-grow: 1; 
         }
-
-        /* Estilo da Navbar */
-        .navbar-brand {
-            font-weight: 700;
-            letter-spacing: -0.5px;
+        
+        .btn-custom-primary {
+            background-color: var(--bs-primary);
+            border-color: var(--bs-primary);
+            color: white;
         }
-        .nav-link {
-            font-weight: 500;
+        .btn-custom-primary:hover {
+            background-color: #3f36c4;
+            border-color: #3f36c4;
+            color: white;
         }
+        
+        .text-primary { color: var(--bs-primary) !important; }
+        .bg-primary { background-color: var(--bs-primary) !important; }
+        .border-primary { border-color: var(--bs-primary) !important; }
+        .table-primary { --bs-table-bg: #d1d5db; } 
     </style>
-
+    
     {% block extra_css %}{% endblock %}
-
 </head>
-<body>
-
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm py-3">
-            <div class="container">
-                <a class="navbar-brand d-flex align-items-center" href="{% url 'principal:home' %}">
-                    <i class="bi bi-backpack2-fill me-2 fs-4"></i>
-                    Aulinhas da Manu
-                </a>
-
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        {% if user.is_authenticated %}
-                            <li class="nav-item">
-                                <a class="nav-link active" href="{% url 'principal:dashboard' %}">Dashboard</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'alunos:lista_alunos' %}">Alunos</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'aulas:lista_aulas' %}">Agenda</a>
-                            </li>
+<body class="d-flex flex-column min-vh-100">
+    
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm sticky-top">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" href="{% url 'principal:home' %}">
+                <i class="bi bi-mortarboard-fill me-2"></i> EduGestão
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+                    data-bs-target="#navbarNav" aria-controls="navbarNav" 
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'principal:dashboard' %}">
+                            <i class="bi bi-speedometer2"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'aulas:lista_aulas' %}">
+                            <i class="bi bi-calendar-check"></i> Agenda
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'alunos:lista_alunos' %}">
+                            <i class="bi bi-people"></i> Alunos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'materiais:lista_materiais' %}">
+                            <i class="bi bi-book"></i> Materiais
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+                
+               <ul class="navbar-nav">
+                    {% if user.is_authenticated %}
+                        <li class="nav-item d-flex align-items-center me-3"> 
+                            <span class="nav-link text-white-50 p-0">
+                                Olá, <strong class="fw-bold text-white">
+                                {{ user.username }}
+                                </strong>
+                            </span>
+                        </li>
+                        <li class="nav-item">
+                            <form action="{% url 'logout' %}" method="post" class="d-inline">
+                                {% csrf_token %}
+                                <button type="submit" 
+                                        class="btn btn-sm btn-light text-primary fw-bold px-3 rounded-pill">
+                                    <i class="bi bi-box-arrow-right"></i> Sair
+                                </button>
+                            </form>
+                        </li>
+                    {% else %}
                         {% endif %}
-                    </ul>
-
-                    <div class="d-flex align-items-center">
-                        {% if user.is_authenticated %}
-                            <div class="dropdown">
-                                <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <div class="bg-white text-primary rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 35px; height: 35px; font-weight: bold;">
-                                        {{ user.username|first|upper }}
-                                    </div>
-                                    <span class="fw-bold d-none d-md-inline">{{ user.username|title }}</span>
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-end shadow border-0" aria-labelledby="userDropdown">
-                                    <li><span class="dropdown-header">Minha Conta</span></li>
-                                    <li><a class="dropdown-item" href="{% url 'principal:dashboard' %}"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li>
-                                        <form action="{% url 'logout' %}" method="post" class="d-inline">
-                                            {% csrf_token %}
-                                            <button type="submit" class="dropdown-item text-danger fw-bold">
-                                                <i class="bi bi-box-arrow-right me-2"></i> Sair
-                                            </button>
-                                        </form>
-                                    </li>
-                                </ul>
-                            </div>
-                        {% else %}
-                            <a href="{% url 'login' %}" class="btn btn-light text-primary fw-bold me-2">Entrar</a>
-                            <a href="{% url 'principal:signup' %}" class="btn btn-outline-light me-3">Cadastrar</a>
-                            
-                            <a href="https://wa.me/5587996222499" target="_blank" class="btn btn-success fw-bold shadow-sm rounded-pill px-3">
-                                <i class="fab fa-whatsapp me-1"></i> Agendar Aula
-                            </a>
-                        {% endif %}
-                    </div>
-                </div>
+                </ul>
             </div>
-        </nav>
-    </header>
+        </div>
+    </nav>
 
-    <main>
-        {% block content %}
-        {% endblock %}
+    <main class="flex-shrink-0">
+        {% block content %}{% endblock %}
     </main>
 
-    <footer class="bg-white border-top mt-5 py-4">
-        <div class="container text-center text-secondary">
-            <p class="mb-1 fw-bold">👩‍🏫 Aulinhas da Manu</p>
-            <p class="small mb-0">© 2025. Alfabetização e Reforço Escolar de Qualidade.</p>
+    <footer class="footer mt-auto py-3 bg-white border-top shadow-sm">
+        <div class="container text-center">
+            <span class="text-muted small">
+                © {% now "Y" %} <strong>EduGestão</strong>. Desenvolvido com <i class="bi bi-heart-fill text-danger"></i> por Manu.
+            </span>
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
+            crossorigin="anonymous">
+    </script>
     {% block extra_js %}{% endblock %}
-
 </body>
 </html>

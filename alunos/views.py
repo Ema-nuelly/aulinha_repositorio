@@ -80,10 +80,10 @@ class ResponsavelCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('alunos:lista_responsaveis')
 
     def form_valid(self, form):
-        # Associa o responsável ao professor logado antes de salvar
+        
         form.instance.professor = self.request.user 
         messages.success(self.request, f"Responsável '{form.instance.Nome}' cadastrado com sucesso!")
-        return super().form_valid(form) # 🌟 O RETORNO CRUCIAL QUE FALTAVA 🌟
+        return super().form_valid(form)
 
 class ResponsavelUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Responsavel
@@ -113,7 +113,7 @@ class ResponsavelDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView)
             return redirect(self.get_success_url())
             
         except IntegrityError:
-            # Lida com a falha de chave estrangeira (se houver alunos atrelados)
+            
             messages.error(
                 request, 
                 f"Erro ao excluir '{nome_responsavel}': Este responsável ainda está ligado a um ou mais alunos. Remova ou reassocie os alunos primeiro."
