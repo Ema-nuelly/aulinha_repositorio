@@ -1,15 +1,23 @@
 {% extends 'base.html' %} 
 {% load static %}
+{% load widget_tweaks %}
 
-{% block title %}Agendar Nova Aula{% endblock %}
+{% block title %}
+    {% if form.instance.pk %}Editar Aula{% else %}Agendar Nova Aula{% endif %}
+{% endblock %}
 
 {% block content %}
-<div class="container my-5" style="max-width: 700px;">
-    <div class="card shadow-lg p-4 rounded-4">
+<div class="container my-5" style="max-width: 800px;">
+    <div class="card shadow-lg p-4 rounded-4 border-start border-5 border-primary">
         
         <h2 class="text-center text-primary mb-4 fw-bold">
+            <i class="bi bi-calendar-plus-fill me-2"></i>
             {% if form.instance.pk %}
-                Editar Aula Agendada
+                {% if aula.Status == 'REALIZADA' %}
+                    Detalhes da Aula Realizada
+                {% else %}
+                    Editar Agendamento
+                {% endif %}
             {% else %}
                 Agendar Nova Aula
             {% endif %}
@@ -18,75 +26,74 @@
         <form method="post">
             {% csrf_token %}
             
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <label for="{{ form.Data.id_for_label }}" class="form-label fw-bold">Data da Aula</label>
-                    {{ form.Data }}
-                </div>
-                <div class="col-md-3">
-                    <label for="{{ form.HoraInicio.id_for_label }}" class="form-label fw-bold">Início</label>
-                    {{ form.HoraInicio }}
-                </div>
-                <div class="col-md-3">
-                    <label for="{{ form.HoraFim.id_for_label }}" class="form-label fw-bold">Fim</label>
-                    {{ form.HoraFim }}
-                </div>
-            </div>
-
-            <div class="mb-3">
-                <label for="{{ form.alunos_participantes.id_for_label }}" class="form-label fw-bold">
-                    Alunos Participantes <span class="text-muted small">(Segure CTRL/CMD para selecionar múltiplos)</span>
-                </label>
-                {{ form.alunos_participantes }}
-                {% for error in form.alunos_participantes.errors %}
-                    <div class="text-danger small">{{ error }}</div>
-                {% endfor %}
-            </div>
-            
-            {% if form.instance.pk %}
+            <fieldset class="mb-4 p-3 border rounded-3">
+                <legend class="float-none w-auto px-2 fs-6 fw-bold text-secondary">Horário da Aula</legend>
                 <div class="row">
-                    <div class="col-md-4 mb-3">
-                        <label for="{{ form.Status.id_for_label }}" class="form-label fw-bold">Status</label>
-                        {{ form.Status }}
+                    <div class="col-md-6 mb-3">
+                        <label for="{{ form.Data.id_for_label }}" class="form-label fw-bold">Data da Aula</label>
+                        {{ form.Data|add_class:"form-control" }}
+                        {% for error in form.Data.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="{{ form.HoraInicio.id_for_label }}" class="form-label fw-bold">Início</label>
+                        {{ form.HoraInicio|add_class:"form-control" }}
+                        {% for error in form.HoraInicio.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="{{ form.HoraFim.id_for_label }}" class="form-label fw-bold">Fim</label>
+                        {{ form.HoraFim|add_class:"form-control" }}
+                        {% for error in form.HoraFim.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
                     </div>
                 </div>
-                
-                <div class="mb-3">
-                    <label for="{{ form.Conteudo.id_for_label }}" class="form-label fw-bold">
-                        Conteúdo Registrado
-                    </label>
-                    {{ form.Conteudo }}
+            </fieldset>
+
+            <div class="mb-4">
+                <label for="{{ form.alunos_participantes.id_for_label }}" class="form-label fw-bold d-block">
+                    Alunos Participantes
+                </label>
+                {{ form.alunos_participantes|add_class:"form-select"|attr:"multiple" }} 
+                {% for error in form.alunos_participantes.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
+            </div>
+
+            {% if form.instance.pk %}
+                <hr class="my-4">
+                <h4 class="fw-bold text-secondary mb-3">Registro de Conteúdo e Materiais</h4>
+
+                <div class="mb-4">
+                    <label for="{{ form.Conteudo.id_for_label }}" class="form-label fw-bold">Conteúdo e Observações da Aula</label>
+                    {{ form.Conteudo|add_class:"form-control"|attr:"rows:5" }}
+                    {% for error in form.Conteudo.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
                 </div>
                 
-                <div class="mb-3">
-                    <label for="{{ form.materiais_usados.id_for_label }}" class="form-label fw-bold">
+                <div class="mb-4">
+                    <label for="{{ form.materiais_usados.id_for_label }}" class="form-label fw-bold d-block">
                         Materiais Didáticos Utilizados
                         <a href="{% url 'materiais:lista_materiais' %}" 
                         target="_blank" 
-                        class="badge text-bg-secondary text-decoration-none ms-2"
+                        class="badge text-bg-info text-decoration-none ms-2"
                         title="Clique para adicionar/editar materiais em uma nova aba">
                             <i class="bi bi-gear-fill"></i> Gerenciar Materiais
                         </a>
                     </label>
-                    {{ form.materiais_usados }}
-                    {% for error in form.materiais_usados.errors %}
-                        <div class="text-danger small">{{ error }}</div>
-                    {% endfor %}
+                    {{ form.materiais_usados|add_class:"form-select"|attr:"multiple" }}
+                    {% for error in form.materiais_usados.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
                 </div>
                 
-            {% endif %}
+                <button type="submit" class="btn btn-success w-100 mb-3 mt-4">
+                    <i class="bi bi-check-lg me-2"></i> Registrar/Salvar Aula
+                </button>
 
-            <button type="submit" class="btn btn-primary w-100 mb-3 mt-4">
-                {% if form.instance.pk %}
-                    Salvar Alterações
-                {% else %}
-                    Agendar Aula
-                {% endif %}
-            </button>
+            {% else %}
+                <button type="submit" class="btn btn-primary w-100 mb-3 mt-4">
+                    <i class="bi bi-calendar-check me-2"></i> Agendar Aula
+                </button>
+            {% endif %}
         </form>
         
         <div class="text-center mt-3">
-            <a href="{% url 'aulas:lista_aulas' %}" class="text-secondary small">Voltar para a Agenda</a>
+            <a href="{% url 'aulas:lista_aulas' %}" class="text-secondary small">
+                <i class="bi bi-arrow-left"></i> Voltar para a Agenda
+            </a>
         </div>
     </div>
 </div>

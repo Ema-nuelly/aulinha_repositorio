@@ -1,32 +1,74 @@
 {% extends 'base.html' %} 
+{% load widget_tweaks %}
 
-{% block title %}Adicionar Aluno{% endblock %}
+{% block title %}
+    {% if form.instance.pk %}Editar Aluno{% else %}Adicionar Aluno{% endif %}
+{% endblock %}
 
 {% block content %}
-<div class="container my-5" style="max-width: 600px;">
-    <div class="card shadow-lg p-4 rounded-4">
-        <h2 class="text-center text-success mb-4 fw-bold">Novo Aluno</h2>
+<div class="container my-5" style="max-width: 700px;">
+    <div class="card shadow-lg p-4 rounded-4 border-start border-5 border-success">
+        
+        <h2 class="text-center text-success mb-4 fw-bold">
+            <i class="bi bi-person-circle me-2"></i>
+            {% if form.instance.pk %}
+                Editar Aluno: {{ form.instance.Nome }}
+            {% else %}
+                Cadastrar Novo Aluno
+            {% endif %}
+        </h2>
         
         <form method="post">
             {% csrf_token %}
             
-            {% for field in form %}
-                <div class="mb-3">
-                    <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
-                    {{ field }}
-                    {% for error in field.errors %}
-                        <div class="text-danger small">{{ error }}</div>
-                    {% endfor %}
+            <div class="mb-3">
+                <label for="{{ form.Nome.id_for_label }}" class="form-label fw-bold">{{ form.Nome.label }}</label>
+                {{ form.Nome|add_class:"form-control" }}
+                {% for error in form.Nome.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="{{ form.NivelEscolar.id_for_label }}" class="form-label fw-bold">{{ form.NivelEscolar.label }}</label>
+                    {{ form.NivelEscolar|add_class:"form-select" }}
+                    {% for error in form.NivelEscolar.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
                 </div>
-            {% endfor %}
+                
+                <div class="col-md-6 mb-3">
+                    <label for="{{ form.DataNascimento.id_for_label }}" class="form-label fw-bold">{{ form.DataNascimento.label }}</label>
+                    {{ form.DataNascimento|add_class:"form-control" }} 
+                    {% for error in form.DataNascimento.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label for="{{ form.responsavel.id_for_label }}" class="form-label fw-bold d-block">
+                    {{ form.responsavel.label }}
+                    <a href="{% url 'alunos:adicionar_responsavel' %}" 
+                       target="_blank" 
+                       class="badge text-bg-secondary text-decoration-none ms-2"
+                       title="Adicionar um novo responsável em uma nova aba">
+                        + Novo Responsável
+                    </a>
+                </label>
+                {{ form.responsavel|add_class:"form-select" }}
+                {% for error in form.responsavel.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
+                <div class="form-text text-muted small">Selecione o responsável legal do aluno.</div>
+            </div>
 
             <button type="submit" class="btn btn-success w-100 mb-3 mt-4">
-                Salvar Aluno
+                {% if form.instance.pk %}
+                    <i class="bi bi-save me-2"></i> Salvar Alterações
+                {% else %}
+                    <i class="bi bi-check-circle-fill me-2"></i> Salvar Aluno
+                {% endif %}
             </button>
         </form>
         
         <div class="text-center mt-3">
-            <a href="{% url 'alunos:lista_alunos' %}" class="text-secondary small">Voltar para a lista de alunos</a>
+            <a href="{% url 'alunos:lista_alunos' %}" class="text-secondary small">
+                <i class="bi bi-arrow-left"></i> Voltar para a lista de alunos
+            </a>
         </div>
     </div>
 </div>
