@@ -10,9 +10,16 @@
 
     <div class="d-flex justify-content-between mb-4">
         <p class="lead text-muted">Total de alunos cadastrados: <span class="fw-bold">{{ alunos.count }}</span></p>
-        <a href="{% url 'alunos:adicionar_aluno' %}" class="btn btn-success fw-bold">
-            + Adicionar Novo Aluno
-        </a>
+        
+        <div> 
+            <a href="{% url 'alunos:lista_responsaveis' %}" class="btn btn-outline-secondary me-2 fw-bold">
+                <i class="bi bi-people-fill"></i> Gerenciar Responsáveis
+            </a>
+            
+            <a href="{% url 'alunos:adicionar_aluno' %}" class="btn btn-success fw-bold">
+                + Adicionar Novo Aluno
+            </a>
+        </div>
     </div>
 
     {% if alunos %}

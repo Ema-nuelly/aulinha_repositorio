@@ -20,6 +20,7 @@ NIVEL_ESCOLAR_CHOICES = [
 ]
 class Responsavel(models.Model):
     ID_Responsavel = models.AutoField(primary_key=True)
+    professor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='responsaveis', null=True)
     Nome = models.CharField(max_length=100)
     CPF = models.CharField(max_length=14, unique=True)
     Email = models.EmailField(max_length=100, unique=True, blank=True, null=True)

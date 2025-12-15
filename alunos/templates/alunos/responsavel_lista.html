@@ -1,0 +1,85 @@
+{% extends 'base.html' %} 
+{% load static %}
+
+{% block title %}Meus Responsáveis{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <h1 class="display-5 fw-bold text-primary mb-4">
+        Gerenciar Responsáveis
+    </h1>
+
+    <div class="d-flex justify-content-between mb-4">
+        <p class="lead text-muted">Total de Responsáveis: <span class="fw-bold">{{ responsaveis.count }}</span></p>
+        <a href="{% url 'alunos:adicionar_responsavel' %}" class="btn btn-primary fw-bold">
+            + Adicionar Novo Responsável
+        </a>
+    </div>
+
+    {% if responsaveis %}
+        <div class="table-responsive">
+            <table class="table table-striped table-hover align-middle shadow-sm rounded-3 overflow-hidden">
+                <thead class="table-primary">
+                    <tr>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Telefone</th>
+                        <th scope="col">Email</th>
+                        <th scope="col" class="text-center">Alunos Atrelados</th>
+                        <th scope="col" class="text-center">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for responsavel in responsaveis %}
+                    <tr>
+                        <td class="fw-bold">{{ responsavel.Nome }}</td>
+                        <td>{{ responsavel.Telefone|default:"Não informado" }}</td>
+                        <td>{{ responsavel.Email|default:"Não informado" }}</td>
+                        <td class="text-center">
+                            {{ responsavel.alunos_relacionados.count }} 
+                            {% if responsavel.alunos_relacionados.count %}
+                                {% endif %}
+                        </td>
+                        <td class="text-center">
+                            <a href="{% url 'alunos:editar_responsavel' pk=responsavel.pk %}" 
+                               class="btn btn-sm btn-outline-secondary me-2"
+                               title="Editar Responsável">
+                                Editar
+                            </a>
+                            
+                            <form method="post" action="{% url 'alunos:deletar_responsavel' pk=responsavel.pk %}" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" 
+                                        class="btn btn-sm btn-outline-danger" 
+                                        title="Excluir Responsável"
+                                        onclick="return confirm('Tem certeza que deseja excluir o responsável {{ responsavel.Nome }}? O sistema irá bloquear a exclusão se houver alunos atrelados a ele.');">
+                                    Excluir
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="alert alert-info text-center mt-5" role="alert">
+            Você ainda não tem responsáveis cadastrados. <a href="{% url 'alunos:adicionar_responsavel' %}" class="alert-link fw-bold">Clique aqui para adicionar o primeiro responsável!</a>
+        </div>
+    {% endif %}
+    
+    <div class="mt-4 text-center">
+        <a href="{% url 'alunos:lista_alunos' %}" class="btn btn-outline-secondary">Voltar para a Lista de Alunos</a>
+    </div>
+
+</div>
+{% endblock %}
