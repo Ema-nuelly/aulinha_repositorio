@@ -35,9 +35,15 @@
                     <a href="{% url 'materiais:editar_categoria' pk=categoria.pk %}" class="btn btn-sm btn-outline-secondary me-2" title="Editar Categoria">
                         Editar
                     </a>
-                    <a href="{% url 'materiais:deletar_categoria' pk=categoria.pk %}" class="btn btn-sm btn-outline-danger" title="Excluir Categoria" onclick="return confirm('Tem certeza que deseja excluir a categoria {{ categoria.Nome }}?');">
-                        Excluir
-                    </a>
+                    <form method="post" action="{% url 'materiais:deletar_categoria' pk=categoria.pk %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" 
+                                class="btn btn-sm btn-outline-danger" 
+                                title="Excluir Categoria"
+                                onclick="return confirm('Tem certeza que deseja excluir a categoria {{ categoria.Nome }}? Esta ação não pode ser desfeita e pode falhar se houver materiais associados.');">
+                            Excluir
+                        </button>
+                    </form>
                 </div>
             </div>
             {% endfor %}

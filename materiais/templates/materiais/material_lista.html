@@ -61,9 +61,15 @@
                                 Editar
                             </a>
                             
-                            <a href="{% url 'materiais:deletar_material' pk=material.pk %}" class="btn btn-sm btn-outline-danger" title="Excluir Material" onclick="return confirm('Tem certeza que deseja excluir este material? Esta ação não pode ser desfeita.');">
-                                Excluir
-                            </a>
+                            <form method="post" action="{% url 'materiais:deletar_material' pk=material.pk %}" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" 
+                                        class="btn btn-sm btn-outline-danger" 
+                                        title="Excluir Material"
+                                        onclick="return confirm('Tem certeza que deseja excluir o material {{ material.Titulo }}? O arquivo físico também será removido. Esta ação é irreversível.');">
+                                    Excluir
+                                </button>
+                            </form>
                         </td>
                     </tr>
                     {% endfor %}
