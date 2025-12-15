@@ -1,0 +1,29 @@
+# Dependências principais
+Django~=5.2.0              # Framework principal (supondo Django 5.x)
+Pillow~=10.3.0             # Necessário para manipulação de arquivos de imagem
+
+# Dependências comuns para Hospedagem/Produção
+gunicorn~=22.0.0           # Servidor de aplicação WSGI para produção (necessário para Render/Heroku)
+python-decouple~=3.8       # Para gerenciar variáveis de ambiente e segurança
+
+# COMO RODAR O PROJETO LOCALMENTE
+
+# 1. Clona o repositório
+git clone https://github.com/Ema-nuelly/aulinha_repositorio
+
+# 2. Entra na pasta
+cd aulinha_repositorio
+
+# 3. Cria e ativa o ambiente virtual (venv)
+python -m venv venv
+source venv/bin/activate  # Ou .\venv\Scripts\activate no Windows
+
+# 4. Instala todas as dependências
+pip install -r requirements.txt
+
+# 5. Roda as migrações e cria o superusuário
+python manage.py migrate
+python manage.py createsuperuser
+
+# 6. Inicia o servidor
+python manage.py runserver
