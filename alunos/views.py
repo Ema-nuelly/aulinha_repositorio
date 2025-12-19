@@ -51,7 +51,7 @@ class AlunoUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     template_name = 'alunos/aluno_form.html'
     
     def get_success_url(self):
-        messages.success(self.request, f"O aluno(a) {self.object.nome} foi atualizado(a) com sucesso!")
+        messages.success(self.request, f"O aluno(a) {self.object.Nome} foi atualizado(a) com sucesso!")
         return reverse_lazy('alunos:lista_alunos') 
 
     def form_valid(self, form):
